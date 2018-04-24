@@ -23,11 +23,20 @@ int main(int argc, char** argv) {
     //Set the Random Number Seed
     srand(static_cast<unsigned int>(time(0)));
     //Declare all Variables Here
+    char choice;
+    float money;
     int card1, card2, card3, card4, cardDe, cardDe2, cardDe3, cardDe4, repeat, 
-            repeat2, repeat3, repeat4; 
+            repeat2, repeat3, repeat4, twOne, twOne2, ace=0;//Values for player and dealer cards
     string crdNm, crdTe, crdNm2, crdTe2, dlrNm, dlrTe, dlrNm2, dlrTe2; 
+    cout<<"Welcome to Blackjack!"<<endl;
+    cout<<"How much money would you like to start with?(Maximum $100,000)"<<endl;
+    cin>>money;
+    cout<<"Press any key to start"<<endl;
+    
+    do{
     //Input or initialize values Here
-    card1=rand()%13+1;//Randomly generate numbers[1,13] for Player
+    cin>>choice;
+    card1=1;//Randomly generate numbers[1,13] for Player
     card2=rand()%4+1;//Randomly Generate Numbers[1,4] for Player
     card3=rand()%13+1; 
     card4=rand()%4+1;
@@ -35,15 +44,20 @@ int main(int argc, char** argv) {
     cardDe2=rand()%4+1;//Randomly Generate Numbers[1,4] for Dealer
     cardDe3=rand()%13+1; 
     cardDe4=rand()%4+1;
-    repeat=card1*card2;
-    repeat2=card3*card4;
-    repeat3=cardDe*cardDe2;
-    repeat4=cardDe3*cardDe4;
-    if(repeat==repeat2||repeat3==repeat4){
-        card1=rand()%13+1;//Randomly generate numbers[1,13] for Player
-        card2=rand()%4+1;//Randomly Generate Numbers[1,4] for Player
-    }
-    if(repeat==repeat2||repeat3==repeat4){card3=rand()%13+1;}
+    //repeat=card1*card2;//to make sure that we do not have repeating cards
+    //repeat2=card3*card4;
+    //repeat3=cardDe*cardDe2;
+    //repeat4=cardDe3*cardDe4;
+    
+    //if(repeat==repeat2||repeat3==repeat4){
+      //  card1=rand()%13+1;//Randomly generate numbers[1,13] for Player
+        //card2=rand()%4+1;//Randomly Generate Numbers[1,4] for Player
+    //}
+    //if(repeat==repeat2||repeat3==repeat4){
+      //  cardDe=rand()%13+1;
+        //cardDe2=rand()%13+1;
+    //}
+    
     switch (card1){
             case 1:crdTe="Ace";break;//Switch Statement to show the user which card they drew
             case 2:crdTe="Two";break;
@@ -129,17 +143,54 @@ int main(int argc, char** argv) {
             case 3:dlrNm2="of Clubs";break;
             case 4:dlrNm2="of Diamonds";break;
     }
-    cout<<crdTe<<" "<<crdNm<<endl;
-    cout<<crdTe2<<" "<<crdNm2<<endl;
-    cout<<dlrTe<<" "<<dlrNm<<endl;
-    cout<<dlrTe2<<" "<<dlrNm2<<endl;
-    if(crdTe>dlrTe){
-        cout<<"You win!"<<endl; 
-    }
-    if(card1>=10||card1<=13){
+    
+    if(card1>10&&card1<=13){
         card1=10;
     }
-    cout<<crdTe<<endl;
+    if(card3>10&&card3<=13){
+        card3=10;
+    }
+    if(cardDe>10&&cardDe<=13){
+        cardDe=10;
+    }
+    if(cardDe3>10&&cardDe3<=13){
+        cardDe3=10;
+    }
+    cout<<"\n Your Cards"<<endl;
+    cout<<crdTe<<" "<<card1<<" "<<crdNm<<endl;
+    cout<<crdTe2<<" "<<card3<<" "<<crdNm2<<endl;
+    if(card1==1){
+        cout<<"Would you like to have your card be worth 1 or 11?"<<endl;
+        cin>>ace;
+        if(ace==1){
+            card1=1;       
+        }else if(ace==11){
+            card1=11;   
+        }          
+    }
+    if(card3==1){
+        cout<<"Would you like to have your card be worth 1 or 11?"<<endl;
+        cin>>ace;
+        if(ace==1){
+            card3=1;       
+        }else if(ace==11){
+            card3=11;   
+        }          
+    }
+    twOne=card1+card3;
+    twOne2=cardDe+cardDe3;
+    cout<<"Would you like another card?"<<endl;
+    cin>>choice;
+    if(choice=='n'){
+    cout<<dlrTe<<" "<<dlrNm<<endl;
+    cout<<dlrTe2<<" "<<dlrNm2<<endl;
+    }
+    if(twOne==21||twOne>twOne2){
+        cout<<"\n You win!"<<twOne<<" "<<twOne2<<endl;
+    }else{
+        cout<<"Dealer wins"<<twOne<<" "<<twOne2<<endl;
+    }
+    }while(choice=='Y'||choice=='y');
     //Process/Calculations Here
     
     //Output Located Here
